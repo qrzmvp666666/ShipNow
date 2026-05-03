@@ -6,6 +6,6 @@ export const config = {
 	marketingUrl: process.env.NEXT_PUBLIC_MARKETING_URL as string | undefined,
 	enabledThemes: ["light", "dark"],
 	defaultTheme: "light",
-	redirectAfterSignIn: "/",
+	redirectAfterSignIn: "/choose-plan",
 	redirectAfterLogout: "/login",
 } as const satisfies SaasConfig;

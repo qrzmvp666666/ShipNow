@@ -98,7 +98,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 					throw error;
 				}
 
-				router.push(config.redirectAfterSignIn);
+				router.push(redirectPath);
 			}
 		} catch (e) {
 			form.setError("root", {

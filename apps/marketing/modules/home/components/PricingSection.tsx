@@ -21,6 +21,11 @@ export function PricingSection() {
 		[],
 	);
 
+	const signupUrlWithPlanRedirect = useMemo(
+		() => signupUrl && `${signupUrl}?redirectTo=/choose-plan`,
+		[signupUrl],
+	);
+
 	const plans = useMemo(() => {
 		const result: Array<{
 			id: string;
@@ -64,12 +69,12 @@ export function PricingSection() {
 				recommended: plan.recommended,
 				isEnterprise,
 				prices,
-				to: signupUrl ?? "#",
+				to: isEnterprise ? (signupUrl ?? "#") : (signupUrlWithPlanRedirect ?? "#"),
 			});
 		}
 
 		return result;
-	}, [t, signupUrl]);
+	}, [t, signupUrl, signupUrlWithPlanRedirect]);
 
 	const hasSubscriptions = plans.some((p) =>
 		p.prices?.some((price) => price.type === "subscription"),

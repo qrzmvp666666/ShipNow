@@ -42,7 +42,7 @@ export default async function ChoosePlanPage() {
 
 	const { activePlan } = createPurchasesHelper(purchases);
 
-	if (activePlan) {
+	if (activePlan && activePlan.id !== "free") {
 		redirect("/");
 	}
 
