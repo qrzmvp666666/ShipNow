@@ -95,7 +95,45 @@
         "deploy": "Deployment",
         "analytics": "Analytics"
       },
-      "socialProof": "999+ users built with ShipAny"
+      "socialProof": "999+ users built with ShipAny",
+      "typewriter": {
+        "prefix": "Build your next",
+        "features": {
+          "0": {
+            "title": "Revolutionary SaaS",
+            "subtitle": "All-in-one: multi-tenancy, auth, payments & storage built-in. Ship your product weeks faster."
+          },
+          "1": {
+            "title": "Authentication System",
+            "subtitle": "Google, GitHub & Apple OAuth, Magic Link, Passkeys and enterprise SSO — all ready out of the box."
+          },
+          "2": {
+            "title": "Multi-tenant App",
+            "subtitle": "Built-in organization management and member roles to power multi-team SaaS products effortlessly."
+          },
+          "3": {
+            "title": "Database Service",
+            "subtitle": "Supabase / PostgreSQL with Drizzle ORM for type-safe queries and automatic migration management."
+          },
+          "4": {
+            "title": "Online Payments",
+            "subtitle": "Stripe & Lemon Squeezy integration with subscription plans, one-time payments and automatic webhooks."
+          },
+          "5": {
+            "title": "Object Storage",
+            "subtitle": "S3, Cloudflare R2 and Supabase Storage for unified file upload, management and access control."
+          },
+          "6": {
+            "title": "Blog & Docs",
+            "subtitle": "MDX-powered blog and documentation site with content collections, SEO optimization and i18n support."
+          },
+          "7": {
+            "title": "Analytics Platform",
+            "subtitle": "PostHog, Google Analytics and Plausible integrations to understand user behavior and conversion funnels."
+          }
+        },
+        "count": "8"
+      }
     },
     "features": {
       "badge": "Incredible features",

@@ -95,7 +95,45 @@
         "deploy": "生产部署",
         "analytics": "数据分析"
       },
-      "socialProof": "999+ 用户使用 ShipAny 构建网站"
+      "socialProof": "999+ 用户使用 ShipAny 构建网站",
+      "typewriter": {
+        "prefix": "用 Next.js 构建您的",
+        "features": {
+          "0": {
+            "title": "革命性 SaaS",
+            "subtitle": "内置多租户、认证、支付、存储一站式解决，帮您节省数周开发时间，快速验证您的产品。"
+          },
+          "1": {
+            "title": "认证鉴权系统",
+            "subtitle": "集成 Google、GitHub、Apple 等 OAuth 登录，支持 Magic Link、Passkey 及企业级 SSO，开箱即用。"
+          },
+          "2": {
+            "title": "多租户应用",
+            "subtitle": "内置组织管理与成员权限体系，轻松构建支持多团队协作的 SaaS 产品。"
+          },
+          "3": {
+            "title": "数据库服务",
+            "subtitle": "基于 Supabase / PostgreSQL，支持 Drizzle ORM，类型安全查询，自动迁移管理。"
+          },
+          "4": {
+            "title": "在线支付功能",
+            "subtitle": "无缝集成 Stripe、Lemon Squeezy，支持订阅计划、一次性付款与 Webhook 自动处理。"
+          },
+          "5": {
+            "title": "对象存储服务",
+            "subtitle": "对接 S3、Cloudflare R2、Supabase Storage，文件上传、管理与权限控制一体化。"
+          },
+          "6": {
+            "title": "博客与文档",
+            "subtitle": "内置 MDX 博客与文档站点，支持内容集合、SEO 优化与多语言，内容即代码。"
+          },
+          "7": {
+            "title": "数据分析平台",
+            "subtitle": "集成 PostHog、Google Analytics、Plausible 等主流分析服务，深入了解用户行为与转化漏斗。"
+          }
+        },
+        "count": "8"
+      }
     },
     "features": {
       "badge": "强大功能",

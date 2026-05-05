@@ -1,236 +1,286 @@
 {
-	"blog": {
-		"description": "Lisez les dernières actualités de notre entreprise",
-		"title": "Mon super blog",
-		"back": "Retour au blog"
-	},
-	"changelog": {
-		"description": "Derniers changements.",
-		"title": "Modifications"
-	},
-	"contact": {
-		"description": "Nous sommes là pour vous aider. Veuillez utiliser le formulaire ci-dessous pour nous contacter.",
-		"form": {
-			"email": "E-mail",
-			"message": "Message",
-			"name": "Nom",
-			"notifications": {
-				"error": "Nous sommes désolés, nous n'avons pas pu envoyer votre message. Veuillez réessayer plus tard.",
-				"success": "Votre message a été envoyé avec succès. Nous vous répondrons dès que possible."
-			},
-			"submit": "Envoyer le message"
-		},
-		"title": "Contactez-nous"
-	},
-	"documentation": {
-		"title": "Documentation"
-	},
-	"faq": {
-		"description": "Avez-vous des questions ? Nous sommes là pour vous.",
-		"title": "Questions fréquemment posées",
-		"items": {
-			"refundPolicy": {
-				"question": "Quelle est la politique de remboursement ?",
-				"answer": "Nous offrons une garantie de remboursement de 30 jours si vous n'êtes pas satisfait de notre produit."
-			},
-			"cancelSubscription": {
-				"question": "Comment annuler mon abonnement ?",
-				"answer": "Vous pouvez annuler votre abonnement en visitant la page de facturation."
-			},
-			"changePlan": {
-				"question": "Puis-je changer de forfait ?",
-				"answer": "Oui, vous pouvez changer de forfait à tout moment en visitant la page de facturation."
-			},
-			"freeTrial": {
-				"question": "Proposez-vous un essai gratuit ?",
-				"answer": "Oui, nous proposons un essai gratuit de 14 jours."
-			},
-			"whatIsShipAny": {
-				"question": "What is this product?",
-				"answer": "It is a development framework for quickly building AI SaaS products. It comes with rich built-in modules and components, ready to use out of the box."
-			},
-			"noCode": {
-				"question": "Can I use it without coding knowledge?",
-				"answer": "This product is mainly designed for users with some development experience. If you are familiar with basic web development concepts, you can get started quickly."
-			},
-			"whatCanBuild": {
-				"question": "What types of AI SaaS can I build?",
-				"answer": "You can build AI writing tools, AI image generators, AI chatbots, subscription-based SaaS, and more. Core features like multi-tenancy, payments, and authentication are all supported."
-			},
-			"howLong": {
-				"question": "How long does it take to develop a project?",
-				"answer": "Thanks to the rich pre-built modules, most developers can launch an MVP within a few days to a week, saving months compared to building from scratch."
-			},
-			"infrastructure": {
-				"question": "What infrastructure is included?",
-				"answer": "The framework includes authentication, database, payments, email, storage, i18n, admin panel, and more — all ready to use out of the box."
-			},
-			"customization": {
-				"question": "What customization options are available?",
-				"answer": "All code is fully open. You can freely modify themes, UI components, business logic, and integrate any third-party services."
-			}
-		},
-		"contactEmailLabel": "Have a question? Email us at:",
-		"contactDiscordLabel": "Or reach us on:"
-	},
-	"home": {
-		"hero": {
-			"new": "Nouveau :",
-			"featureBadge": "Fonctionnalité incroyable de votre SaaS",
-			"title": "Votre SaaS révolutionnaire construit avec Next.js",
-			"subtitle": "Ceci est une application de démonstration construite avec supastarter. Elle vous fera gagner beaucoup de temps et d'efforts pour construire votre prochain SaaS.",
-			"getStarted": "Commencer",
-			"documentation": "Documentation",
-			"imageAlt": "Notre application",
-			"builtWith": "Construit et livré avec ces outils incroyables"
-		},
-		"features": {
-			"badge": "Fonctionnalités incroyables",
-			"title": "Des fonctionnalités que vos clients adoreront",
-			"description": "Dans cette section, vous pouvez présenter toutes les fonctionnalités que votre SaaS offre et comment elles peuvent bénéficier à vos clients.",
-			"feature1": {
-				"title": "Fonctionnalité 1",
-				"subtitle": "Faites plus avec notre SaaS incroyable.",
-				"description": "C'est une fonctionnalité brillante. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration.",
-				"benefit1": {
-					"title": "Avantage 1",
-					"description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
-				},
-				"benefit2": {
-					"title": "Avantage 2",
-					"description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
-				},
-				"benefit3": {
-					"title": "Avantage 3",
-					"description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
-				}
-			},
-			"feature2": {
-				"title": "Fonctionnalité 2",
-				"subtitle": "Votre SaaS peut aussi faire ça.",
-				"description": "Un autre texte de démonstration pour une autre fonctionnalité.",
-				"benefit1": {
-					"title": "Avantage 1",
-					"description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
-				},
-				"benefit2": {
-					"title": "Avantage 2",
-					"description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
-				},
-				"benefit3": {
-					"title": "Avantage 3",
-					"description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
-				}
-			}
-		},
-		"earlyAccess": {
-			"title": "Lancez votre AI SaaS dès aujourd'hui",
-			"subtitle": "Commencez ici et publiez votre produit rapidement avec supastarter.",
-			"getStarted": "Commencer",
-			"readDocs": "Lire la documentation"
-		},
-		"testimonials": {
-			"title": "What users say",
-			"subtitle": "Hear from real users who have shipped with us",
-			"items": {
-				"andy": {
-					"quote": "The speed of Next.js + convenient payment ecosystem + out-of-the-box AI capabilities + constant feature iterations made this the closest thing to WordPress in the AI era.",
-					"name": "Andy",
-					"role": "Product Director, Public Company",
-					"initials": "An"
-				},
-				"blank": {
-					"quote": "It shortened the journey from idea to product. Its plugin architecture enables rapid feature expansion, and the configuration-based approach minimizes code changes — perfect for launching SaaS products quickly.",
-					"name": "blank",
-					"role": "Author of AITDK",
-					"initials": "bl"
-				},
-				"corey": {
-					"quote": "The best template for Vibe Coding. The AI-friendly architecture lets you launch a product MVP with just a few rounds of AI conversation, turning ideas into reality.",
-					"name": "Corey",
-					"role": "Independent Developer",
-					"initials": "Co"
-				},
-				"gefei": {
-					"quote": "Congrats on V2! Many friends in my community have launched their sites using it and gained traffic and revenue. Building a SaaS from scratch could take months; this saves time so you can focus on growth.",
-					"name": "Gefei",
-					"role": "Overseas Community Founder",
-					"initials": "GF"
-				},
-				"james": {
-					"quote": "It helped me transition from product manager to full-stack developer. I've built several international websites with it, and they keep generating steady income.",
-					"name": "James",
-					"role": "Product Manager",
-					"initials": "Ja"
-				},
-				"justDoIt": {
-					"quote": "I recently built a website with it in under 30 minutes. The whole journey went smoothly — I didn't expect it to come together so fast!",
-					"name": "JustDoIt",
-					"role": "Tech Manager",
-					"initials": "JD"
-				}
-			}
-		}
-	},
-	"newsletter": {
-		"email": "E-mail",
-		"hints": {
-			"error": {
-				"message": "Impossible de s'abonner à la newsletter. Veuillez réessayer plus tard."
-			},
-			"success": {
-				"message": "Merci de vous être abonné à notre newsletter. Nous vous tiendrons informé.",
-				"title": "Abonné"
-			}
-		},
-		"submit": "S'abonner",
-		"subtitle": "Soyez parmi les premiers à accéder à supastarter.nextjs.",
-		"title": "Accès anticipé"
-	},
-	"notFound": {
-		"code": "404",
-		"title": "Page non trouvée",
-		"goToDashboard": "Aller au tableau de bord",
-		"goToHomepage": "Aller à l'accueil"
-	},
-	"common": {
-		"footer": {
-			"blog": "Blog",
-			"features": "Fonctionnalités",
-			"pricing": "Tarifs",
-			"privacyPolicy": "Politique de confidentialité",
-			"termsAndConditions": "Conditions générales",
-			"builtWith": "Construit avec supastarter",
-			"description": "Un kit de démarrage SaaS moderne avec Next.js. Livrez plus vite avec des modules et composants prêts à l'emploi.",
-			"featuresTitle": "Fonctionnalités",
-			"resourcesTitle": "Ressources",
-			"legalTitle": "Légal",
-			"docs": "Documentation",
-			"changelog": "Journal des modifications",
-			"contact": "Contact",
-			"allRightsReserved": "Tous droits réservés"
-		},
-		"menu": {
-			"blog": "Blog",
-			"changelog": "Modifications",
-			"contact": "Contact",
-			"dashboard": "Tableau de bord",
-			"docs": "Docs",
-			"faq": "FAQ",
-			"login": "Connexion",
-			"pricing": "Tarifs"
-		},
-		"aria": {
-			"menu": "Menu",
-			"language": "Langue"
-		},
-		"tableOfContents": {
-			"title": "Sur cette page"
-		},
-		"colorMode": {
-			"system": "Système",
-			"light": "Clair",
-			"dark": "Sombre"
-		}
-	}
+  "blog": {
+    "description": "Lisez les dernières actualités de notre entreprise",
+    "title": "Mon super blog",
+    "back": "Retour au blog"
+  },
+  "changelog": {
+    "description": "Derniers changements.",
+    "title": "Modifications"
+  },
+  "contact": {
+    "description": "Nous sommes là pour vous aider. Veuillez utiliser le formulaire ci-dessous pour nous contacter.",
+    "form": {
+      "email": "E-mail",
+      "message": "Message",
+      "name": "Nom",
+      "notifications": {
+        "error": "Nous sommes désolés, nous n'avons pas pu envoyer votre message. Veuillez réessayer plus tard.",
+        "success": "Votre message a été envoyé avec succès. Nous vous répondrons dès que possible."
+      },
+      "submit": "Envoyer le message"
+    },
+    "title": "Contactez-nous"
+  },
+  "documentation": {
+    "title": "Documentation"
+  },
+  "faq": {
+    "description": "Avez-vous des questions ? Nous sommes là pour vous.",
+    "title": "Questions fréquemment posées",
+    "items": {
+      "refundPolicy": {
+        "question": "Quelle est la politique de remboursement ?",
+        "answer": "Nous offrons une garantie de remboursement de 30 jours si vous n'êtes pas satisfait de notre produit."
+      },
+      "cancelSubscription": {
+        "question": "Comment annuler mon abonnement ?",
+        "answer": "Vous pouvez annuler votre abonnement en visitant la page de facturation."
+      },
+      "changePlan": {
+        "question": "Puis-je changer de forfait ?",
+        "answer": "Oui, vous pouvez changer de forfait à tout moment en visitant la page de facturation."
+      },
+      "freeTrial": {
+        "question": "Proposez-vous un essai gratuit ?",
+        "answer": "Oui, nous proposons un essai gratuit de 14 jours."
+      },
+      "whatIsShipAny": {
+        "question": "What is this product?",
+        "answer": "It is a development framework for quickly building AI SaaS products. It comes with rich built-in modules and components, ready to use out of the box."
+      },
+      "noCode": {
+        "question": "Can I use it without coding knowledge?",
+        "answer": "This product is mainly designed for users with some development experience. If you are familiar with basic web development concepts, you can get started quickly."
+      },
+      "whatCanBuild": {
+        "question": "What types of AI SaaS can I build?",
+        "answer": "You can build AI writing tools, AI image generators, AI chatbots, subscription-based SaaS, and more. Core features like multi-tenancy, payments, and authentication are all supported."
+      },
+      "howLong": {
+        "question": "How long does it take to develop a project?",
+        "answer": "Thanks to the rich pre-built modules, most developers can launch an MVP within a few days to a week, saving months compared to building from scratch."
+      },
+      "infrastructure": {
+        "question": "What infrastructure is included?",
+        "answer": "The framework includes authentication, database, payments, email, storage, i18n, admin panel, and more — all ready to use out of the box."
+      },
+      "customization": {
+        "question": "What customization options are available?",
+        "answer": "All code is fully open. You can freely modify themes, UI components, business logic, and integrate any third-party services."
+      }
+    },
+    "contactEmailLabel": "Have a question? Email us at:",
+    "contactDiscordLabel": "Or reach us on:"
+  },
+  "home": {
+    "hero": {
+      "new": "Nouveau :",
+      "featureBadge": "Fonctionnalité incroyable de votre SaaS",
+      "title": "Votre SaaS révolutionnaire construit avec Next.js",
+      "subtitle": "Ceci est une application de démonstration construite avec supastarter. Elle vous fera gagner beaucoup de temps et d'efforts pour construire votre prochain SaaS.",
+      "getStarted": "Commencer",
+      "documentation": "Documentation",
+      "imageAlt": "Notre application",
+      "builtWith": "Construit et livré avec ces outils incroyables",
+      "typewriter": {
+        "prefix": "Construisez votre prochain",
+        "features": {
+          "0": {
+            "title": "SaaS Révolutionnaire",
+            "subtitle": "Tout-en-un : multi-tenant, auth, paiements et stockage intégrés. Lancez votre produit des semaines plus vite."
+          },
+          "1": {
+            "title": "Système d'Authentification",
+            "subtitle": "OAuth Google, GitHub et Apple, Magic Link, Passkeys et SSO entreprise — prêts à l'emploi."
+          },
+          "2": {
+            "title": "Application Multi-tenant",
+            "subtitle": "Gestion des organisations et rôles membres intégrés pour des produits SaaS collaboratifs."
+          },
+          "3": {
+            "title": "Service de Base de Données",
+            "subtitle": "Supabase / PostgreSQL avec Drizzle ORM pour des requêtes typées et la gestion automatique des migrations."
+          },
+          "4": {
+            "title": "Paiements en Ligne",
+            "subtitle": "Intégration Stripe et Lemon Squeezy avec abonnements, paiements uniques et webhooks automatiques."
+          },
+          "5": {
+            "title": "Stockage d'Objets",
+            "subtitle": "S3, Cloudflare R2 et Supabase Storage pour l'upload, la gestion et le contrôle d'accès des fichiers."
+          },
+          "6": {
+            "title": "Blog et Documentation",
+            "subtitle": "Blog et site de documentation MDX avec collections de contenu, optimisation SEO et support i18n."
+          },
+          "7": {
+            "title": "Plateforme d'Analytique",
+            "subtitle": "Intégrations PostHog, Google Analytics et Plausible pour comprendre le comportement utilisateur."
+          }
+        },
+        "count": "8"
+      },
+      "tabs": {
+        "multiTenant": "Multi-tenant",
+        "database": "Base de données",
+        "storage": "Stockage objet",
+        "auth": "Authentification",
+        "payment": "Paiement",
+        "blog": "Blog",
+        "docs": "Documentation",
+        "seo": "SEO",
+        "deploy": "Déploiement",
+        "analytics": "Analytique"
+      }
+    },
+    "features": {
+      "badge": "Fonctionnalités incroyables",
+      "title": "Des fonctionnalités que vos clients adoreront",
+      "description": "Dans cette section, vous pouvez présenter toutes les fonctionnalités que votre SaaS offre et comment elles peuvent bénéficier à vos clients.",
+      "feature1": {
+        "title": "Fonctionnalité 1",
+        "subtitle": "Faites plus avec notre SaaS incroyable.",
+        "description": "C'est une fonctionnalité brillante. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration.",
+        "benefit1": {
+          "title": "Avantage 1",
+          "description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
+        },
+        "benefit2": {
+          "title": "Avantage 2",
+          "description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
+        },
+        "benefit3": {
+          "title": "Avantage 3",
+          "description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
+        }
+      },
+      "feature2": {
+        "title": "Fonctionnalité 2",
+        "subtitle": "Votre SaaS peut aussi faire ça.",
+        "description": "Un autre texte de démonstration pour une autre fonctionnalité.",
+        "benefit1": {
+          "title": "Avantage 1",
+          "description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
+        },
+        "benefit2": {
+          "title": "Avantage 2",
+          "description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
+        },
+        "benefit3": {
+          "title": "Avantage 3",
+          "description": "C'est un avantage incroyable. Et ci-dessous vous pouvez voir quelques raisons pour lesquelles. C'est essentiellement juste un texte de démonstration."
+        }
+      }
+    },
+    "earlyAccess": {
+      "title": "Lancez votre AI SaaS dès aujourd'hui",
+      "subtitle": "Commencez ici et publiez votre produit rapidement avec supastarter.",
+      "getStarted": "Commencer",
+      "readDocs": "Lire la documentation"
+    },
+    "testimonials": {
+      "title": "What users say",
+      "subtitle": "Hear from real users who have shipped with us",
+      "items": {
+        "andy": {
+          "quote": "The speed of Next.js + convenient payment ecosystem + out-of-the-box AI capabilities + constant feature iterations made this the closest thing to WordPress in the AI era.",
+          "name": "Andy",
+          "role": "Product Director, Public Company",
+          "initials": "An"
+        },
+        "blank": {
+          "quote": "It shortened the journey from idea to product. Its plugin architecture enables rapid feature expansion, and the configuration-based approach minimizes code changes — perfect for launching SaaS products quickly.",
+          "name": "blank",
+          "role": "Author of AITDK",
+          "initials": "bl"
+        },
+        "corey": {
+          "quote": "The best template for Vibe Coding. The AI-friendly architecture lets you launch a product MVP with just a few rounds of AI conversation, turning ideas into reality.",
+          "name": "Corey",
+          "role": "Independent Developer",
+          "initials": "Co"
+        },
+        "gefei": {
+          "quote": "Congrats on V2! Many friends in my community have launched their sites using it and gained traffic and revenue. Building a SaaS from scratch could take months; this saves time so you can focus on growth.",
+          "name": "Gefei",
+          "role": "Overseas Community Founder",
+          "initials": "GF"
+        },
+        "james": {
+          "quote": "It helped me transition from product manager to full-stack developer. I've built several international websites with it, and they keep generating steady income.",
+          "name": "James",
+          "role": "Product Manager",
+          "initials": "Ja"
+        },
+        "justDoIt": {
+          "quote": "I recently built a website with it in under 30 minutes. The whole journey went smoothly — I didn't expect it to come together so fast!",
+          "name": "JustDoIt",
+          "role": "Tech Manager",
+          "initials": "JD"
+        }
+      }
+    }
+  },
+  "newsletter": {
+    "email": "E-mail",
+    "hints": {
+      "error": {
+        "message": "Impossible de s'abonner à la newsletter. Veuillez réessayer plus tard."
+      },
+      "success": {
+        "message": "Merci de vous être abonné à notre newsletter. Nous vous tiendrons informé.",
+        "title": "Abonné"
+      }
+    },
+    "submit": "S'abonner",
+    "subtitle": "Soyez parmi les premiers à accéder à supastarter.nextjs.",
+    "title": "Accès anticipé"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page non trouvée",
+    "goToDashboard": "Aller au tableau de bord",
+    "goToHomepage": "Aller à l'accueil"
+  },
+  "common": {
+    "footer": {
+      "blog": "Blog",
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "privacyPolicy": "Politique de confidentialité",
+      "termsAndConditions": "Conditions générales",
+      "builtWith": "Construit avec supastarter",
+      "description": "Un kit de démarrage SaaS moderne avec Next.js. Livrez plus vite avec des modules et composants prêts à l'emploi.",
+      "featuresTitle": "Fonctionnalités",
+      "resourcesTitle": "Ressources",
+      "legalTitle": "Légal",
+      "docs": "Documentation",
+      "changelog": "Journal des modifications",
+      "contact": "Contact",
+      "allRightsReserved": "Tous droits réservés"
+    },
+    "menu": {
+      "blog": "Blog",
+      "changelog": "Modifications",
+      "contact": "Contact",
+      "dashboard": "Tableau de bord",
+      "docs": "Docs",
+      "faq": "FAQ",
+      "login": "Connexion",
+      "pricing": "Tarifs"
+    },
+    "aria": {
+      "menu": "Menu",
+      "language": "Langue"
+    },
+    "tableOfContents": {
+      "title": "Sur cette page"
+    },
+    "colorMode": {
+      "system": "Système",
+      "light": "Clair",
+      "dark": "Sombre"
+    }
+  }
 }

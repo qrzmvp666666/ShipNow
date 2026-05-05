@@ -10,6 +10,7 @@ import heroImageDark from "../../../public/images/hero-image-dark.png";
 import heroImage from "../../../public/images/hero-image.png";
 import { AVATAR_PHOTO_IDS, TESTIMONIAL_KEYS } from "../lib/testimonials";
 import { HeroTabs } from "./HeroTabs";
+import { TypewriterTitle } from "./TypewriterTitle";
 
 export function HeroSection() {
 	const t = useTranslations();
@@ -28,15 +29,11 @@ export function HeroSection() {
 					</div>
 				</div>
 
-				<h1 className="font-medium text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tighter max-w-3xl mx-auto text-balance text-foreground">
-					{t("home.hero.title")}
+				<h1 className="font-medium text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight max-w-3xl mx-auto text-foreground min-h-[2.5em] md:min-h-[2.4em]">
+					<TypewriterTitle />
 				</h1>
 
-				<p className="mt-2 text-sm sm:text-lg max-w-3xl mx-auto text-balance text-foreground/60">
-					{t("home.hero.subtitle")}
-				</p>
-
-				<div className="mt-4 gap-2 flex items-center justify-center">
+							<div className="mt-4 gap-2 flex items-center justify-center">
 					<Button size="lg" variant="primary" asChild>
 						<a href={config.saasUrl}>
 							{t("home.hero.getStarted")}
