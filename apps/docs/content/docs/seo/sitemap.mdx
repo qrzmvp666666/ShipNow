@@ -1,0 +1,97 @@
+---
+title: 网站地图
+description: 了解如何配置 sitemap.xml，帮助搜索引擎发现和索引你的所有页面。
+---
+
+## 概述
+
+网站地图（Sitemap）帮助搜索引擎发现并索引应用的所有页面。supastarter 内置了基于 Next.js `MetadataRoute.Sitemap` API 的动态网站地图，文件位于 `apps/marketing/app/sitemap.ts`。
+
+## 默认网站地图
+
+默认网站地图自动包含以下页面：
+
+- **静态营销页面**：首页、博客列表页、更新日志页
+- **博客文章**：从 Content Collections 中读取所有文章路径
+- **法律页面**：隐私政策、服务条款等
+
+每个页面会为所有启用的语言生成对应的 URL。
+
+```ts title="apps/marketing/app/sitemap.ts"
+import { config as i18nConfig } from "@i18n/config";
+import { getBaseUrl } from "@shared/lib/base-url";
+import { getUniqueBasePaths } from "@shared/lib/content";
+import { allLegalPages, allPosts } from "content-collections";
+import type { MetadataRoute } from "next";
+
+const baseUrl = getBaseUrl();
+const locales = Object.keys(i18nConfig.locales);
+const defaultLocale = i18nConfig.defaultLocale;
+
+function localePath(locale: string, path: string): string {
+	const prefix = locale === defaultLocale ? "" : `/${locale}`;
+	return `${prefix}${path}`;
+}
+
+const staticMarketingPages = ["", "/blog", "/changelog"];
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const postPaths = getUniqueBasePaths(allPosts);
+	const legalPaths = getUniqueBasePaths(allLegalPages);
+
+	return [
+		...staticMarketingPages.flatMap((page) =>
+			locales.map((locale) => ({
+				url: new URL(localePath(locale, page), baseUrl).href,
+				lastModified: new Date(),
+			})),
+		),
+		...postPaths.flatMap((path) =>
+			locales.map((locale) => ({
+				url: new URL(localePath(locale, `/blog/${path}`), baseUrl).href,
+				lastModified: new Date(),
+			})),
+		),
+		...legalPaths.flatMap((path) =>
+			locales.map((locale) => ({
+				url: new URL(localePath(locale, `/legal/${path}`), baseUrl).href,
+				lastModified: new Date(),
+			})),
+		),
+	];
+}
+```
+
+## 添加自定义页面
+
+若需将自定义的静态或动态页面加入网站地图，可扩展 `staticMarketingPages` 数组，或新增一段 `flatMap` 逻辑：
+
+```ts title="apps/marketing/app/sitemap.ts"
+// 添加静态页面
+const staticMarketingPages = ["", "/blog", "/changelog", "/pricing"];
+
+// 或动态添加来自数据库的页面
+const productPaths = await getProductPaths(); // 自定义查询
+
+return [
+	// ...existing entries
+	...productPaths.flatMap((path) =>
+		locales.map((locale) => ({
+			url: new URL(localePath(locale, `/products/${path}`), baseUrl).href,
+			lastModified: new Date(),
+		})),
+	),
+];
+```
+
+## 访问 Sitemap
+
+部署后，sitemap 可通过以下 URL 访问：
+
+```
+https://your-domain.com/sitemap.xml
+```
+
+## 延伸阅读
+
+了解更多网站地图配置方式，请参阅 [Next.js 官方文档](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap)。

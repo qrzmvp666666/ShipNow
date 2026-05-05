@@ -1,0 +1,58 @@
+---
+title: 元标签
+description: 为每个页面配置元标签，帮助搜索引擎理解页面内容，提升应用的 SEO 表现。
+---
+
+## 概述
+
+元标签（Meta Tags）用于描述页面内容。为每个页面设置元标签非常重要，它能帮助搜索引擎理解页面的主题，从而提升应用的搜索排名。
+
+## 默认标题配置
+
+默认情况下，应用已为每个页面设置了基础标题，该标题定义在对应路由所属应用的 layout 文件中。对于公开页面，通常位于 `/apps/marketing/app/[locale]/layout.tsx`。
+
+```ts title="apps/marketing/app/[locale]/layout.tsx"
+export const metadata: Metadata = {
+	title: {
+		absolute: "supastarter.nextjs - Application",
+		default: "supastarter.nextjs - Application",
+		template: "%s | supastarter.nextjs - Application",
+	},
+};
+```
+
+以上配置的效果如下：
+
+- 首页及所有未单独设置标题的页面，标题均为 `supastarter.nextjs - Application`
+- 若某页面设置了标题，则会套用 `template` 模板。例如页面标题为 `更新日志`，最终标题将为 `更新日志 | supastarter.nextjs - Application`
+
+## 为特定页面设置元标签
+
+在页面文件中使用 `generateMetadata` 函数，即可为该页面单独设置元标签：
+
+```ts title="apps/marketing/app/[locale]/changelog/page.tsx"
+export const generateMetadata = () => {
+	return {
+		title: "更新日志",
+		description: "更新日志页面的描述内容",
+	};
+};
+```
+
+## 国际化标题
+
+如需支持多语言标题，可在 `generateMetadata` 函数中使用翻译函数：
+
+```ts title="apps/marketing/app/[locale]/changelog/page.tsx"
+export async function generateMetadata() {
+	const t = await getTranslations();
+	return {
+		title: t("changelog.title"),
+		description: t("changelog.description"),
+	};
+}
+```
+
+## 延伸阅读
+
+了解更多元标签配置方式，请参阅 [Next.js 官方文档](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)。
