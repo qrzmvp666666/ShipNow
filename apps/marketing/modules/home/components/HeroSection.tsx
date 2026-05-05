@@ -81,21 +81,21 @@ export function HeroSection() {
 					</div>
 				</div>
 
-				<div className="mt-8 lg:mt-10">
+				<div className="mt-8 lg:mt-10 max-w-6xl mx-auto">
 					<HeroTabs />
 				</div>
 
-				<div className="mt-4 p-4 mx-auto rounded-4xl border border-primary/10 bg-primary/5">
+				<div className="mt-4 p-2 mx-auto rounded-4xl border border-primary/10 bg-primary/5 max-w-6xl">
 					<Image
 						src={heroImage}
 						alt={t("home.hero.imageAlt")}
-						className="block rounded-xl dark:hidden"
+						className="block rounded-xl dark:hidden w-full"
 						priority
 					/>
 					<Image
 						src={heroImageDark}
 						alt={t("home.hero.imageAlt")}
-						className="hidden rounded-xl dark:block"
+						className="hidden rounded-xl dark:block w-full"
 						priority
 					/>
 				</div>
