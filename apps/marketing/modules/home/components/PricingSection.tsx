@@ -54,6 +54,7 @@ export function PricingSection() {
 
 		for (const [planId, plan] of Object.entries(paymentsConfig.plans)) {
 			const isEnterprise = "isEnterprise" in plan;
+			if (isEnterprise) continue;
 			const prices = "prices" in plan ? (plan as PaidPlan).prices : undefined;
 
 			result.push({
