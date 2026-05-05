@@ -1,0 +1,160 @@
+---
+title: 数据分析
+description: 配置分析服务商，集成页面浏览统计与自定义事件追踪。
+---
+
+## 概述
+
+项目内置了通用的分析模块，位于 `apps/marketing/modules/analytics`，支持接入多种主流分析服务商并追踪自定义事件。
+
+## 所需工具
+
+| 工具 / 服务 | 本地开发 | 生产环境 | 说明 |
+|------------|:--------:|:--------:|------|
+| 分析服务商账号 | — | ✅ | 选择一个注册账号并获取追踪 ID |
+| 环境变量 | ✅ | ✅ | 在 `.env.local` 中配置对应的公开变量 |
+
+## 切换分析服务商
+
+编辑 `apps/marketing/modules/analytics/index.tsx`，只保留一行 export：
+
+```ts title="apps/marketing/modules/analytics/index.tsx"
+export * from "./provider/google";
+// export * from './provider/mixpanel';
+// export * from './provider/pirsch';
+// export * from './provider/plausible';
+// export * from './provider/posthog';
+// export * from './provider/umami';
+// export * from './provider/vercel';
+// export * from './provider/custom';
+```
+
+## 各服务商环境变量
+
+### Google Analytics
+
+```dotenv
+NEXT_PUBLIC_GOOGLE_ANALYTICS_ID="G-XXXXXXXXXX"
+```
+
+> 在 [Google Analytics](https://analytics.google.com) 后台创建媒体资源后获取衡量 ID。
+
+### Mixpanel
+
+```dotenv
+NEXT_PUBLIC_MIXPANEL_TOKEN="your_token"
+```
+
+> 需额外安装依赖：`pnpm --filter marketing add mixpanel-browser`
+> 在 [Mixpanel](https://mixpanel.com) 后台的项目设置中获取 Token。
+
+### Pirsch
+
+```dotenv
+NEXT_PUBLIC_PIRSCH_CODE="your_code"
+```
+
+> 在 [Pirsch](https://pirsch.io) 的域名设置中获取追踪代码。
+
+### Plausible
+
+```dotenv
+NEXT_PUBLIC_PLAUSIBLE_URL="yourdomain.com"
+```
+
+> 填写你在 [Plausible](https://plausible.io) 后台添加的域名（不含 `https://`）。
+
+### PostHog
+
+```dotenv
+NEXT_PUBLIC_POSTHOG_KEY="phc_xxxxxxxxxx"
+```
+
+> 需额外安装依赖：`pnpm --filter marketing add posthog-js`
+> 在 [PostHog](https://posthog.com) 项目设置中获取 Project API Key。欧洲用户可将 `api_host` 改为 `https://eu.i.posthog.com`。
+
+### Umami
+
+```dotenv
+NEXT_PUBLIC_UMAMI_TRACKING_ID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
+
+> 在 [Umami](https://umami.is) 后台添加网站后获取 Website ID。
+
+### Vercel Analytics
+
+无需额外环境变量，在 Vercel 项目设置中启用 Analytics 功能即可。
+
+> 需额外安装依赖：`pnpm --filter marketing add @vercel/analytics`
+
+### 自定义分析
+
+如需接入未列出的服务商，编辑 `apps/marketing/modules/analytics/provider/custom/index.tsx`，实现 `AnalyticsScript` 组件和 `useAnalytics` Hook：
+
+```tsx title="apps/marketing/modules/analytics/provider/custom/index.tsx"
+"use client";
+
+export function AnalyticsScript() {
+	// 在此返回你的分析脚本组件
+	return null;
+}
+
+export function useAnalytics() {
+	const trackEvent = (event: string, data: Record<string, unknown>) => {
+		// 在此调用你的分析服务追踪自定义事件
+		console.info("tracking event", event, data);
+	};
+
+	return {
+		trackEvent,
+	};
+}
+```
+
+## 分析脚本自动注入
+
+切换服务商后，`AnalyticsScript` 组件会自动注入到营销站点的所有页面中，无需手动添加：
+
+```tsx title="apps/marketing/app/[locale]/layout.tsx"
+import { AnalyticsScript } from "@analytics";
+
+export default function Layout({ children }) {
+	return (
+		<html>
+			<body>
+				{children}
+				<AnalyticsScript />
+			</body>
+		</html>
+	);
+}
+```
+
+页面浏览量将自动被追踪。
+
+## 追踪自定义事件
+
+通过 `useAnalytics` Hook 的 `trackEvent` 函数追踪自定义事件：
+
+```tsx title="apps/marketing/modules/home/components/HeroSection.tsx"
+import { useAnalytics } from "@analytics";
+
+export function HeroSection() {
+	const { trackEvent } = useAnalytics();
+
+	return (
+		<button
+			onClick={() => trackEvent("cta-clicked", { location: "hero" })}
+		>
+			立即开始
+		</button>
+	);
+}
+```
+
+`trackEvent` 接受两个参数：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `event` | `string` | 事件名称 |
+| `data` | `Record<string, unknown>` | 附加的事件数据（可选） |
