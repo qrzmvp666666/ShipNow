@@ -2,7 +2,6 @@ import { getOrganizationList, getSession } from "@auth/lib/server";
 import { PricingTable } from "@payments/components/PricingTable";
 import { listPurchases } from "@payments/lib/server";
 import { config as authConfig } from "@repo/auth/config";
-import { config as paymentsConfig } from "@repo/payments/config";
 import {
 	createCheckoutLink,
 	findPriceByPlanId,
@@ -10,6 +9,7 @@ import {
 	getProviderPriceIdByPlanId,
 	type PlanId,
 } from "@repo/payments";
+import { config as paymentsConfig } from "@repo/payments/config";
 import { createPurchasesHelper } from "@repo/payments/lib/helper";
 import { AuthWrapper } from "@shared/components/AuthWrapper";
 import { getTranslations } from "next-intl/server";
@@ -64,10 +64,11 @@ export default async function ChoosePlanPage({
 	// If planId is provided, skip the plan selection page and go directly to checkout
 	if (planId) {
 		const normalizedInterval = interval === "year" ? "year" : "month";
-		const price = findPriceByPlanId(planId as PlanId, {
-			type: "subscription",
-			interval: normalizedInterval,
-		}) ?? findPriceByPlanId(planId as PlanId, { type: "one-time" });
+		const price =
+			findPriceByPlanId(planId as PlanId, {
+				type: "subscription",
+				interval: normalizedInterval,
+			}) ?? findPriceByPlanId(planId as PlanId, { type: "one-time" });
 
 		const priceId = price
 			? getProviderPriceIdByPlanId(planId as PlanId, {
@@ -81,7 +82,8 @@ export default async function ChoosePlanPage({
 				organizationId ? { organizationId } : { userId: session.user.id },
 			);
 
-			const appUrl = process.env.NEXT_PUBLIC_SAAS_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
+			const appUrl =
+				process.env.NEXT_PUBLIC_SAAS_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
 			const redirectUrl = organizationId
 				? `${appUrl}/checkout-return?organizationId=${organizationId}`
 				: `${appUrl}/checkout-return`;
@@ -93,8 +95,7 @@ export default async function ChoosePlanPage({
 				name: session.user.name ?? "",
 				redirectUrl,
 				...(organizationId ? { organizationId } : { userId: session.user.id }),
-				trialPeriodDays:
-					"trialPeriodDays" in price ? price.trialPeriodDays : undefined,
+				trialPeriodDays: "trialPeriodDays" in price ? price.trialPeriodDays : undefined,
 				customerId: customerId ?? undefined,
 			});
 

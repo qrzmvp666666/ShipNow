@@ -11,7 +11,13 @@ import { useLocaleCurrency } from "@shared/hooks/locale-currency";
 import { useRouter } from "@shared/hooks/router";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowRightIcon, BadgePercentIcon, CheckIcon, CreditCardIcon, StarIcon } from "lucide-react";
+import {
+	ArrowRightIcon,
+	BadgePercentIcon,
+	CheckIcon,
+	CreditCardIcon,
+	StarIcon,
+} from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -121,13 +127,13 @@ export function PricingTable({
 				</div>
 			)}
 
-			<div className="mb-6 flex flex-wrap items-center justify-center gap-2">
+			<div className="mb-6 gap-2 flex flex-wrap items-center justify-center">
 				<span className="text-sm text-foreground/50">{t("pricing.paymentMethod")}:</span>
 				<button
 					type="button"
 					onClick={() => setPaymentMethod("card")}
 					className={cn(
-						"flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
+						"gap-1.5 px-3 py-1.5 text-xs font-medium flex items-center rounded-full border transition-all",
 						paymentMethod === "card"
 							? "border-foreground/30 bg-foreground/10 text-foreground"
 							: "border-border text-foreground/50 hover:border-foreground/30 hover:text-foreground/80",
@@ -140,7 +146,7 @@ export function PricingTable({
 					type="button"
 					onClick={() => setPaymentMethod("wechat_person")}
 					className={cn(
-						"flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
+						"gap-1.5 px-3 py-1.5 text-xs font-medium flex items-center rounded-full border transition-all",
 						paymentMethod === "wechat_person"
 							? "border-[#07c160] bg-[#07c160]/10 text-[#07c160]"
 							: "border-border text-foreground/50 hover:border-[#07c160]/50 hover:text-[#07c160]/80",
@@ -153,7 +159,7 @@ export function PricingTable({
 					type="button"
 					onClick={() => setPaymentMethod("alipay_person")}
 					className={cn(
-						"flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
+						"gap-1.5 px-3 py-1.5 text-xs font-medium flex items-center rounded-full border transition-all",
 						paymentMethod === "alipay_person"
 							? "border-[#1677ff] bg-[#1677ff]/10 text-[#1677ff]"
 							: "border-border text-foreground/50 hover:border-[#1677ff]/50 hover:text-[#1677ff]/80",
