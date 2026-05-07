@@ -1,11 +1,12 @@
 import { config } from "../config";
-import type { PaidPlan, PlanPrice } from "../types";
+import type { PaidPlan, PaymentMethod, PlanPrice } from "../types";
 import { findPriceByPlanId, type PlanId, type RecurringInterval } from "./plans";
 
 interface ProviderPriceMappingEntry {
 	planId: PlanId;
 	type: PlanPrice["type"];
 	interval?: RecurringInterval;
+	paymentMethod: PaymentMethod;
 	priceId?: string;
 }
 
@@ -19,6 +20,7 @@ function getProviderPriceMappings(): ProviderPriceMappingEntry[] {
 			planId: planId as PlanId,
 			type: price.type,
 			interval: price.type === "subscription" ? price.interval : undefined,
+			paymentMethod: price.paymentMethod ?? "card",
 			priceId: price.priceId,
 		}));
 	});
@@ -29,20 +31,18 @@ export function getProviderPriceIdByPlanId(
 	selection: {
 		type: PlanPrice["type"];
 		interval?: RecurringInterval;
+		paymentMethod?: PaymentMethod;
 	},
 ) {
-	const price = findPriceByPlanId(planId, selection);
-
-	if (!price) {
-		return null;
-	}
+	const method = selection.paymentMethod ?? "card";
 
 	return (
 		getProviderPriceMappings().find(
 			(entry) =>
 				entry.planId === planId &&
 				entry.type === selection.type &&
-				entry.interval === selection.interval,
+				entry.interval === selection.interval &&
+				entry.paymentMethod === method,
 		)?.priceId ?? null
 	);
 }
@@ -61,6 +61,7 @@ export function getPlanPriceByProviderPriceId(priceId: string) {
 	const price = findPriceByPlanId(mapping.planId, {
 		type: mapping.type,
 		interval: mapping.interval,
+		paymentMethod: mapping.paymentMethod,
 	});
 
 	if (!price) {

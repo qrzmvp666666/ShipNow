@@ -1,6 +1,6 @@
 import { auth } from "@repo/auth";
 import { logger } from "@repo/logs";
-import { webhookHandler as paymentsWebhookHandler } from "@repo/payments";
+import { qixiangWebhookHandler, webhookHandler as paymentsWebhookHandler } from "@repo/payments";
 import { getBaseUrl } from "@repo/utils";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
@@ -27,8 +27,10 @@ export const app = new Hono()
 	)
 	// Auth handler
 	.on(["POST", "GET"], "/auth/**", (c) => auth.handler(c.req.raw))
-	// Payments webhook handler
+	// Stripe payments webhook handler
 	.post("/webhooks/payments", (c) => paymentsWebhookHandler(c.req.raw))
+	// QiXiang (WeChat/Alipay) payment result callback — QiXiang uses GET
+	.get("/webhooks/payments/qixiang", (c) => qixiangWebhookHandler(c.req.raw))
 	// Health check
 	.get("/health", (c) => c.text("OK"))
 	// oRPC handlers (for RPC and OpenAPI)

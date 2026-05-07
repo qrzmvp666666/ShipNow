@@ -7,6 +7,7 @@ import type { PaidPlan, PaymentMethod } from "@repo/payments/types";
 import { cn } from "@repo/ui";
 import { Button } from "@repo/ui/components/button";
 import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/tabs";
+import { toastError } from "@repo/ui/components/toast";
 import { useRouter } from "@shared/hooks/router";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation } from "@tanstack/react-query";
@@ -100,6 +101,7 @@ export function PricingTable({
 				type: selection.type,
 				interval: selection.interval,
 				organizationId,
+				paymentMethod,
 				redirectUrl: organizationId
 					? `${window.location.origin}/checkout-return?organizationId=${organizationId}`
 					: `${window.location.origin}/checkout-return`,
@@ -108,37 +110,33 @@ export function PricingTable({
 			window.location.href = checkoutLink;
 		} catch (error) {
 			console.error(error);
+			toastError("支付失败", error instanceof Error ? error.message : "发起支付时出错，请稍后重试");
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const filteredPlans = Object.entries(plans).filter(([planId]) => planId !== activePlanId);
+	const isChinesePayment = paymentMethod === "wechat_person" || paymentMethod === "alipay_person";
 
-	const hasSubscriptions = filteredPlans.some(([_, plan]) =>
-		"prices" in plan
-			? (plan as PaidPlan).prices.some((price) => price.type === "subscription")
-			: false,
-	);
+	// Filter plans: exclude current plan, and hide subscription-only plans when using Chinese payment
+	const filteredPlans = Object.entries(plans).filter(([planId, plan]) => {
+		if (planId === activePlanId) return false;
+		if (!isChinesePayment) return true;
+		if ("isEnterprise" in plan) return true;
+		return (plan as PaidPlan).prices.some((p) => (p.paymentMethod ?? "card") === paymentMethod);
+	});
+
+	const hasSubscriptions =
+		!isChinesePayment &&
+		Object.values(plans).some((plan) =>
+			"prices" in plan
+				? (plan as PaidPlan).prices.some((price) => price.type === "subscription")
+				: false,
+		);
 
 	return (
 		<div className={cn("@container", className)}>
-			{hasSubscriptions && (
-				<div className="mb-6 flex justify-center">
-					<Tabs
-						value={interval}
-						onValueChange={(value) => setInterval(value as typeof interval)}
-						data-test="price-table-interval-tabs"
-					>
-						<TabsList className="border-foreground/10">
-							<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
-							<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
-						</TabsList>
-					</Tabs>
-				</div>
-			)}
-
-			<div className="mb-6 gap-2 flex flex-wrap items-center justify-center">
+			<div className="mb-4 gap-2 flex flex-wrap items-center justify-center">
 				<span className="text-sm text-foreground/50">{t("pricing.paymentMethod")}:</span>
 				<button
 					type="button"
@@ -180,7 +178,30 @@ export function PricingTable({
 					{t("pricing.paymentMethods.alipay_person")}
 				</button>
 			</div>
-			<div className="gap-4 grid grid-cols-3">
+
+			{hasSubscriptions && (
+				<div className="mb-6 flex justify-center">
+					<Tabs
+						value={interval}
+						onValueChange={(value) => setInterval(value as typeof interval)}
+						data-test="price-table-interval-tabs"
+					>
+						<TabsList className="border-foreground/10">
+							<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
+							<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
+						</TabsList>
+					</Tabs>
+				</div>
+			)}
+
+			<div
+				className={cn(
+					"gap-4 grid grid-cols-1 mx-auto",
+					filteredPlans.length <= 2
+						? "max-w-4xl md:grid-cols-2"
+						: "max-w-6xl md:grid-cols-2 lg:grid-cols-3",
+				)}
+			>
 				{filteredPlans.map(([planId, plan]) => {
 					const isEnterprise = "isEnterprise" in plan ? plan.isEnterprise : false;
 					const prices = "prices" in plan ? (plan as PaidPlan).prices : undefined;

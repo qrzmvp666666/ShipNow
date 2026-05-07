@@ -3,11 +3,13 @@ import { getOrganizationById } from "@repo/database";
 import { logger } from "@repo/logs";
 import {
 	createCheckoutLink as createCheckoutLinkFn,
+	createQiXiangCheckoutLink,
 	findPriceByPlanId,
 	getCustomerIdFromEntity,
 	getProviderPriceIdByPlanId,
 	type PlanId,
 } from "@repo/payments";
+import { getBaseUrl } from "@repo/utils";
 import { z } from "zod";
 
 import { localeMiddleware } from "../../../orpc/middleware/locale-middleware";
@@ -29,36 +31,68 @@ export const createCheckoutLink = protectedProcedure
 			interval: z.enum(["month", "year"]).optional(),
 			redirectUrl: z.string().optional(),
 			organizationId: z.string().optional(),
+			/**
+			 * Payment method selected by the user.  WeChat and Alipay are routed
+			 * to the QiXiang provider; card payments use Stripe.
+			 */
+			paymentMethod: z
+				.enum(["card", "wechat_person", "alipay_person"])
+				.optional()
+				.default("card"),
 		}),
 	)
 	.handler(
 		async ({
-			input: { planId, redirectUrl, type, interval, organizationId },
+			input: { planId, redirectUrl, type, interval, organizationId, paymentMethod },
 			context: { user },
 		}) => {
-			const customerId = await getCustomerIdFromEntity(
-				organizationId
-					? {
-							organizationId,
-						}
-					: {
-							userId: user.id,
-						},
-			);
-
 			const normalizedType = type === "subscription" ? "subscription" : "one-time";
 			const price = findPriceByPlanId(planId as PlanId, {
 				type: normalizedType,
 				interval,
+				paymentMethod,
 			});
 			const priceId = getProviderPriceIdByPlanId(planId as PlanId, {
 				type: normalizedType,
 				interval,
+				paymentMethod,
 			});
 
 			if (!price || !priceId) {
 				throw new ORPCError("NOT_FOUND");
 			}
+
+			// ── QiXiang (WeChat / Alipay) ─────────────────────────────────────
+			if (paymentMethod === "wechat_person" || paymentMethod === "alipay_person") {
+				const qixiangType = paymentMethod === "wechat_person" ? "wxpay" : "alipay";
+				const baseUrl = getBaseUrl(process.env.NEXT_PUBLIC_SAAS_URL, 3000);
+
+				const param = JSON.stringify({
+					...(organizationId ? { organizationId } : { userId: user.id }),
+					priceId,
+				});
+
+				try {
+					const { checkoutLink } = await createQiXiangCheckoutLink({
+						type: qixiangType,
+						amount: price.amount,
+						productName: planId,
+						notifyUrl: `${baseUrl}/api/webhooks/payments/qixiang`,
+						returnUrl: redirectUrl ?? `${baseUrl}/checkout-return`,
+						param,
+					});
+
+					return { checkoutLink };
+				} catch (e) {
+					logger.error(e);
+					throw new ORPCError("INTERNAL_SERVER_ERROR");
+				}
+			}
+
+			// ── Stripe (card) ─────────────────────────────────────────────────
+			const customerId = await getCustomerIdFromEntity(
+				organizationId ? { organizationId } : { userId: user.id },
+			);
 
 			const trialPeriodDays =
 				price && "trialPeriodDays" in price ? price.trialPeriodDays : undefined;

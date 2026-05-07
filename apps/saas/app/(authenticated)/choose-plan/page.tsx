@@ -4,6 +4,7 @@ import { listPurchases } from "@payments/lib/server";
 import { config as authConfig } from "@repo/auth/config";
 import {
 	createCheckoutLink,
+	createQiXiangCheckoutLink,
 	findPriceByPlanId,
 	getCustomerIdFromEntity,
 	getProviderPriceIdByPlanId,
@@ -29,15 +30,19 @@ export async function generateMetadata() {
 export default async function ChoosePlanPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ planId?: string; interval?: string }>;
+	searchParams: Promise<{ planId?: string; interval?: string; paymentMethod?: string }>;
 }) {
 	const t = await getTranslations("choosePlan");
-	const { planId, interval } = await searchParams;
+	const { planId, interval, paymentMethod } = await searchParams;
 	const session = await getSession();
+	const selectedPaymentMethod =
+		paymentMethod === "wechat_person" || paymentMethod === "alipay_person"
+			? paymentMethod
+			: "card";
 
 	if (!session) {
 		const loginPath = planId
-			? `/login?redirectTo=${encodeURIComponent(`/choose-plan?planId=${planId}${interval ? `&interval=${interval}` : ""}`)}`
+			? `/login?redirectTo=${encodeURIComponent(`/choose-plan?planId=${planId}${interval ? `&interval=${interval}` : ""}&paymentMethod=${selectedPaymentMethod}`)}`
 			: "/login";
 		redirect(loginPath);
 	}
@@ -68,25 +73,50 @@ export default async function ChoosePlanPage({
 			findPriceByPlanId(planId as PlanId, {
 				type: "subscription",
 				interval: normalizedInterval,
-			}) ?? findPriceByPlanId(planId as PlanId, { type: "one-time" });
+				paymentMethod: selectedPaymentMethod,
+			}) ??
+			findPriceByPlanId(planId as PlanId, {
+				type: "one-time",
+				paymentMethod: selectedPaymentMethod,
+			});
 
 		const priceId = price
 			? getProviderPriceIdByPlanId(planId as PlanId, {
 					type: price.type,
 					interval: price.type === "subscription" ? price.interval : undefined,
+					paymentMethod: selectedPaymentMethod,
 				})
 			: null;
 
 		if (price && priceId) {
-			const customerId = await getCustomerIdFromEntity(
-				organizationId ? { organizationId } : { userId: session.user.id },
-			);
-
 			const appUrl =
 				process.env.NEXT_PUBLIC_SAAS_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
 			const redirectUrl = organizationId
 				? `${appUrl}/checkout-return?organizationId=${organizationId}`
 				: `${appUrl}/checkout-return`;
+
+			if (
+				selectedPaymentMethod === "wechat_person" ||
+				selectedPaymentMethod === "alipay_person"
+			) {
+				const { checkoutLink } = await createQiXiangCheckoutLink({
+					type: selectedPaymentMethod === "wechat_person" ? "wxpay" : "alipay",
+					amount: price.amount,
+					productName: planId,
+					notifyUrl: `${appUrl}/api/webhooks/payments/qixiang`,
+					returnUrl: redirectUrl,
+					param: JSON.stringify({
+						...(organizationId ? { organizationId } : { userId: session.user.id }),
+						priceId,
+					}),
+				});
+
+				redirect(checkoutLink);
+			}
+
+			const customerId = await getCustomerIdFromEntity(
+				organizationId ? { organizationId } : { userId: session.user.id },
+			);
 
 			const checkoutLink = await createCheckoutLink({
 				type: price.type,

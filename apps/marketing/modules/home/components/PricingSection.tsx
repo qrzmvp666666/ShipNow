@@ -58,6 +58,7 @@ export function PricingSection() {
 		() => config.saasUrl && `${String(config.saasUrl).replace(/\/$/, "")}`,
 		[],
 	);
+	const isChinesePayment = paymentMethod === "wechat_person" || paymentMethod === "alipay_person";
 
 	const plans = useMemo(() => {
 		const result: Array<{
@@ -89,11 +90,18 @@ export function PricingSection() {
 			const isEnterprise = "isEnterprise" in plan;
 			if (isEnterprise) continue;
 			const prices = "prices" in plan ? (plan as PaidPlan).prices : undefined;
+			const hasSelectedPaymentMethod = prices?.some(
+				(price) => (price.paymentMethod ?? "card") === paymentMethod,
+			);
+
+			if (isChinesePayment && !hasSelectedPaymentMethod) {
+				continue;
+			}
 
 			// Point directly to /choose-plan on the saas app with planId+interval.
 			// The saas app redirects to /login if not authenticated, preserving the query params.
 			const planUrl = saasUrl
-				? `${saasUrl}/choose-plan?planId=${planId}&interval=${interval}`
+				? `${saasUrl}/choose-plan?planId=${planId}&interval=${interval}&paymentMethod=${paymentMethod}`
 				: "#";
 
 			result.push({
@@ -114,11 +122,15 @@ export function PricingSection() {
 		}
 
 		return result;
-	}, [t, saasUrl, interval]);
+	}, [t, saasUrl, interval, paymentMethod, isChinesePayment]);
 
-	const hasSubscriptions = plans.some((p) =>
-		p.prices?.some((price) => price.type === "subscription"),
-	);
+	const hasSubscriptions =
+		!isChinesePayment &&
+		Object.values(paymentsConfig.plans).some((plan) =>
+			"prices" in plan
+				? (plan as PaidPlan).prices.some((price) => price.type === "subscription")
+				: false,
+		);
 
 	return (
 		<section id="pricing" className="scroll-mt-16 py-12 lg:py-16 border-y">
@@ -133,24 +145,7 @@ export function PricingSection() {
 				</div>
 
 				<div className="@container">
-					{hasSubscriptions && (
-						<div className="mb-6 flex justify-center">
-							<Tabs
-								value={interval}
-								onValueChange={(value) =>
-									setBillingInterval(value as "month" | "year")
-								}
-								data-test="price-table-interval-tabs"
-							>
-								<TabsList className="border-foreground/10">
-									<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
-									<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
-								</TabsList>
-							</Tabs>
-						</div>
-					)}
-
-					<div className="mb-6 gap-2 flex flex-wrap items-center justify-center">
+					<div className="mb-4 gap-2 flex flex-wrap items-center justify-center">
 						<span className="text-sm text-foreground/50">
 							{t("pricing.paymentMethod")}:
 						</span>
@@ -194,9 +189,27 @@ export function PricingSection() {
 							{t("pricing.paymentMethods.alipay_person")}
 						</button>
 					</div>
+
+					{hasSubscriptions && (
+						<div className="mb-6 flex justify-center">
+							<Tabs
+								value={interval}
+								onValueChange={(value) =>
+									setBillingInterval(value as "month" | "year")
+								}
+								data-test="price-table-interval-tabs"
+							>
+								<TabsList className="border-foreground/10">
+									<TabsTrigger value="month">{t("pricing.monthly")}</TabsTrigger>
+									<TabsTrigger value="year">{t("pricing.yearly")}</TabsTrigger>
+								</TabsList>
+							</Tabs>
+						</div>
+					)}
 					<div
 						className={cn(
-							"gap-4 grid grid-cols-1",
+							"gap-4 grid grid-cols-1 mx-auto",
+							plans.length <= 2 ? "max-w-4xl" : "max-w-7xl",
 							plans.length >= 2 && "@xl:grid-cols-2",
 							plans.length >= 3 && "@3xl:grid-cols-3",
 							plans.length >= 4 && "@4xl:grid-cols-4",
