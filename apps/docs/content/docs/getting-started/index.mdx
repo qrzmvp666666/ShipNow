@@ -41,6 +41,52 @@ docker compose up -d
 
 > MinIO 启动时会自动创建 `avatars` bucket 并设置公开读权限。
 
+## 基于模板创建独立项目
+
+> 用同一模板开发多个项目时，需要为每个项目配置独立的 Docker 服务，其余步骤与上方标准流程完全相同。
+
+克隆项目后，在执行 `docker compose up -d` **之前**，先修改以下两个文件：
+
+### 1. docker-compose.yml
+
+将容器名、端口、volume 名改为项目专属名称，避免与其他项目冲突：
+
+```yaml
+services:
+  postgres:
+    container_name: myproject-postgres      # 改成你的项目名
+    ports:
+      - "5433:5432"                         # 换一个未被占用的端口
+    volumes:
+      - myproject_postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: myproject                # 可选：改数据库名
+
+  minio:
+    container_name: myproject-minio
+    ports:
+      - "9002:9000"
+      - "9003:9001"
+    volumes:
+      - myproject_minio_data:/data
+
+  minio-setup:
+    container_name: myproject-minio-setup
+
+volumes:
+  myproject_postgres_data:
+  myproject_minio_data:
+```
+
+### 2. .env
+
+```dotenv
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/myproject"
+S3_ENDPOINT="http://localhost:9002"
+```
+
+改完后按标准流程继续即可，两个项目可同时运行互不干扰。
+
 ## 配置环境变量
 
 ```bash
