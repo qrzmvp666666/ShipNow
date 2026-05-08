@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/tabs";
+import { cn } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
 export function LoginModeSwitch({
@@ -14,15 +14,30 @@ export function LoginModeSwitch({
 }) {
 	const t = useTranslations();
 	return (
-		<Tabs value={activeMode} onValueChange={onChange} className={className}>
-			<TabsList className="w-full">
-				<TabsTrigger value="password" className="flex-1">
-					{t("auth.login.modes.password")}
-				</TabsTrigger>
-				<TabsTrigger value="magic-link" className="flex-1">
-					{t("auth.login.modes.magicLink")}
-				</TabsTrigger>
-			</TabsList>
-		</Tabs>
+		<div
+			className={cn(
+				"text-sm inline-flex w-full items-center justify-center border-b-2 text-card-foreground/80",
+				className,
+			)}
+			role="tablist"
+		>
+			{(["password", "magic-link"] as const).map((mode) => (
+				<button
+					key={mode}
+					type="button"
+					role="tab"
+					aria-selected={activeMode === mode}
+					onClick={() => onChange(mode)}
+					className={cn(
+						"-mb-0.5 flex-1 px-3 py-2 font-medium text-sm inline-flex items-center justify-center border-b-2 border-transparent whitespace-nowrap text-foreground/60 ring-offset-background transition-all hover:text-foreground/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-hidden",
+						activeMode === mode && "border-primary text-card-foreground",
+					)}
+				>
+					{mode === "password"
+						? t("auth.login.modes.password")
+						: t("auth.login.modes.magicLink")}
+				</button>
+			))}
+		</div>
 	);
 }

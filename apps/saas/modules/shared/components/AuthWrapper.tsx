@@ -11,9 +11,9 @@ export function AuthWrapper({
 	contentClass,
 }: PropsWithChildren<{ contentClass?: string }>) {
 	return (
-		<div className="py-6 flex min-h-screen w-full">
+		<div className="py-6 flex min-h-dvh w-full">
 			<div className="gap-8 flex w-full flex-col items-center justify-between">
-				<div className="container">
+				<div className="relative z-0 container">
 					<div className="flex items-center justify-between">
 						<a href={config.marketingUrl ?? "/"} className="block">
 							<Logo />
@@ -26,10 +26,10 @@ export function AuthWrapper({
 					</div>
 				</div>
 
-				<div className="container flex justify-center">
+				<div className="pointer-events-auto relative z-10 container flex justify-center">
 					<main
 						className={cn(
-							"max-w-md p-6 lg:p-8 w-full rounded-3xl border bg-card",
+							"max-w-md p-6 lg:p-8 pointer-events-auto relative z-10 w-full rounded-3xl border bg-card",
 							contentClass,
 						)}
 					>

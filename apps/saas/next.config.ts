@@ -5,8 +5,21 @@ import nextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
+const allowedDevOrigin = process.env.NEXT_PUBLIC_SAAS_URL
+	? new URL(process.env.NEXT_PUBLIC_SAAS_URL).hostname
+	: undefined;
+
 const nextConfig: NextConfig = {
 	transpilePackages: ["@repo/api", "@repo/auth", "@repo/database", "@repo/ui"],
+	allowedDevOrigins: [
+		...(allowedDevOrigin ? [allowedDevOrigin] : []),
+		"192.168.2.20",
+		"192.168.2.20:3000",
+		"http://192.168.2.20:3000",
+		"https://unwandering-paradisaical-marietta.ngrok-free.dev",
+		"*.ngrok-free.dev",
+		"*.ngrok-free.app",
+	],
 	images: {
 		remotePatterns: [
 			{
